@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Alumnos{% endblock %}
+
+{% block content %}
+<h1>Alumnos</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Año / Curso</th>
+            <th>Colegio</th>
+            <th>Docente</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for a in alumnos %}
+        <tr>
+            <td>{{ a.nombre }}</td>
+            <td>{{ a.telefono or "—" }}</td>
+            <td>{{ a.año_curso or "—" }}</td>
+            <td>{{ a.colegio or "—" }}</td>
+            <td>{{ a.docente or "—" }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" style="text-align:center; color:#94a3b8;">No hay alumnos cargados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

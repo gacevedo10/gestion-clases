@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Pagos{% endblock %}
+
+{% block content %}
+<h1>Pagos</h1>
+
+<div class="btn-bar">
+    <a href="/pagos/nuevo" class="btn btn-primary">+ Registrar pago</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Alumno</th>
+            <th>Monto</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in pagos %}
+        <tr>
+            <td>{{ p.fecha }}</td>
+            <td>{{ p.alumno }}</td>
+            <td>${{ "{:,.0f}".format(p.monto) }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3" style="text-align:center; color:#94a3b8;">No hay pagos registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

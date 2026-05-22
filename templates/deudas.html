@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Deudas{% endblock %}
+
+{% block content %}
+<h1>Saldo por alumno</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Alumno</th>
+            <th>Total clases</th>
+            <th>Total pagado</th>
+            <th>Saldo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in deudas %}
+        <tr>
+            <td>{{ d.nombre }}</td>
+            <td>${{ "{:,.0f}".format(d.total_clases) }}</td>
+            <td>${{ "{:,.0f}".format(d.total_pagado) }}</td>
+            <td>
+                {% if d.saldo > 0 %}
+                    <span class="badge badge-red">Debe ${{ "{:,.0f}".format(d.saldo) }}</span>
+                {% elif d.saldo < 0 %}
+                    <span class="badge badge-green">A favor ${{ "{:,.0f}".format(d.saldo|abs) }}</span>
+                {% else %}
+                    <span class="badge badge-gray">Al día</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4" style="text-align:center; color:#94a3b8;">No hay datos todavía.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

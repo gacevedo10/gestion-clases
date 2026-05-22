@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Clases{% endblock %}
+
+{% block content %}
+<h1>Clases</h1>
+
+<div class="btn-bar">
+    <a href="/clases/nueva" class="btn btn-primary">+ Nueva clase</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Alumno</th>
+            <th>Asignatura</th>
+            <th>Horas</th>
+            <th>Valor hora</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in clases %}
+        <tr>
+            <td>{{ c.fecha }}</td>
+            <td>{{ c.alumno }}</td>
+            <td>{{ c.asignatura }}</td>
+            <td>{{ c.horas }}</td>
+            <td>${{ "{:,.0f}".format(c.valor_hora) }}</td>
+            <td>${{ "{:,.0f}".format(c.total) }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" style="text-align:center; color:#94a3b8;">No hay clases registradas.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
