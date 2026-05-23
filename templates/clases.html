@@ -2,38 +2,39 @@
 {% block title %}Clases{% endblock %}
 
 {% block content %}
-<h1>Clases</h1>
-
-<div class="btn-bar">
+<div class="page-header">
+    <h1>Clases</h1>
     <a href="/clases/nueva" class="btn btn-primary">+ Nueva clase</a>
 </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Alumno</th>
-            <th>Asignatura</th>
-            <th>Horas</th>
-            <th>Valor hora</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for c in clases %}
-        <tr>
-            <td>{{ c.fecha }}</td>
-            <td>{{ c.alumno }}</td>
-            <td>{{ c.asignatura }}</td>
-            <td>{{ c.horas }}</td>
-            <td>${{ "{:,.0f}".format(c.valor_hora) }}</td>
-            <td>${{ "{:,.0f}".format(c.total) }}</td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="6" style="text-align:center; color:#94a3b8;">No hay clases registradas.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Alumno</th>
+                <th>Asignatura</th>
+                <th>Horas</th>
+                <th>Valor hora</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in clases %}
+            <tr>
+                <td>{{ c.fecha }}</td>
+                <td>{{ c.alumno }}</td>
+                <td>{{ c.asignatura }}</td>
+                <td>{{ c.horas }}h</td>
+                <td class="amount">${{ "{:,.0f}".format(c.valor_hora) }}</td>
+                <td class="amount amount-total">${{ "{:,.0f}".format(c.total) }}</td>
+            </tr>
+            {% else %}
+            <tr class="empty-row">
+                <td colspan="6">No hay clases registradas todavía.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

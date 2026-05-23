@@ -53,7 +53,7 @@ def id_docente(nombre):
 alumnos = [
     ("Thiago Flores", "3585147629", "5° año", "Instituto 25 de Mayo", "Romina Delfini"),
     ("Amanda Fernández", "3535692010", "3° año", "ITAPU", None),
-    ("Thiago González", "3584253689", "4° año", "ITAPU", "Laura Vignoli"),
+    ("Benjamín Moyano", "3585145316", "5° año", "ITAPU", "Laura Vignoli"),
     ("Delfina", "3562436547", "3° año", "ITAPU", None),
     ("Triana", "3584820381", "5° año", "Instituto 25 de Mayo", "Romina Delfini"),
     # Agregá más filas si necesitás
@@ -61,7 +61,7 @@ alumnos = [
 
 for nombre, telefono, año, colegio, docente in alumnos:
     cursor.execute(
-        """INSERT INTO alumnos (nombre, telefono, año_curso, id_colegio, id_docente)
+        """INSERT or IGNORE INTO alumnos (nombre, telefono, año_curso, id_colegio, id_docente)
            VALUES (?, ?, ?, ?, ?)""",
         (nombre, telefono, año, id_colegio(colegio), id_docente(docente))
     )

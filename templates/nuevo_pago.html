@@ -2,14 +2,16 @@
 {% block title %}Registrar pago{% endblock %}
 
 {% block content %}
-<h1>Registrar pago</h1>
+<div class="page-header">
+    <h1>Registrar pago</h1>
+</div>
 
 <div class="form-card">
     <form method="POST">
         <div class="form-group">
             <label>Alumno</label>
             <select name="id_alumno" required>
-                <option value="">— Seleccioná —</option>
+                <option value="">Seleccioná un alumno</option>
                 {% for a in alumnos %}
                 <option value="{{ a.id }}">{{ a.nombre }}</option>
                 {% endfor %}

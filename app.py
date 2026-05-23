@@ -120,19 +120,38 @@ def deudas():
     conn = get_db()
     lista = conn.execute("""
         SELECT a.nombre,
-               COALESCE(SUM(cl.total), 0)  AS total_clases,
-               COALESCE(SUM(p.monto),  0)  AS total_pagado,
-               COALESCE(SUM(cl.total), 0) - COALESCE(SUM(p.monto), 0) AS saldo
+               COALESCE((SELECT SUM(cl.total) FROM clases cl WHERE cl.id_alumno = a.id), 0) AS total_clases,
+               COALESCE((SELECT SUM(p.monto)  FROM pagos  p  WHERE p.id_alumno  = a.id), 0) AS total_pagado,
+               COALESCE((SELECT SUM(cl.total) FROM clases cl WHERE cl.id_alumno = a.id), 0) -
+               COALESCE((SELECT SUM(p.monto)  FROM pagos  p  WHERE p.id_alumno  = a.id), 0) AS saldo
         FROM alumnos a
-        LEFT JOIN clases cl ON a.id = cl.id_alumno
-        LEFT JOIN pagos  p  ON a.id = p.id_alumno
-        GROUP BY a.id, a.nombre
         ORDER BY saldo DESC
     """).fetchall()
     conn.close()
     return render_template("deudas.html", deudas=lista)
 
+@app.route("/alumnos/nuevo", methods=["GET", "POST"])
+def nuevo_alumno():
+    conn = get_db()
+    if request.method == "POST":
+        conn.execute("""
+            INSERT OR IGNORE INTO alumnos (nombre, telefono, año_curso, id_colegio, id_docente)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            request.form["nombre"],
+            request.form["telefono"] or None,
+            request.form["año_curso"] or None,
+            request.form["id_colegio"] or None,
+            request.form["id_docente"] or None,
+        ))
+        conn.commit()
+        conn.close()
+        return redirect(url_for("alumnos"))
 
+    colegios = conn.execute("SELECT id, nombre FROM colegios ORDER BY nombre").fetchall()
+    docentes = conn.execute("SELECT id, nombre FROM docentes ORDER BY nombre").fetchall()
+    conn.close()
+    return render_template("nuevo_alumno.html", colegios=colegios, docentes=docentes)
 # ── ARRANQUE ─────────────────────────────────────────────
 if __name__ == "__main__":
     app.run(debug=True)

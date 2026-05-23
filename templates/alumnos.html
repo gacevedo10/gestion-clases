@@ -2,32 +2,37 @@
 {% block title %}Alumnos{% endblock %}
 
 {% block content %}
-<h1>Alumnos</h1>
+<div class="page-header">
+    <h1>Alumnos</h1>
+    <a href="/alumnos/nuevo" class="btn btn-primary">+ Nuevo alumno</a>
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Teléfono</th>
-            <th>Año / Curso</th>
-            <th>Colegio</th>
-            <th>Docente</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for a in alumnos %}
-        <tr>
-            <td>{{ a.nombre }}</td>
-            <td>{{ a.telefono or "—" }}</td>
-            <td>{{ a.año_curso or "—" }}</td>
-            <td>{{ a.colegio or "—" }}</td>
-            <td>{{ a.docente or "—" }}</td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="5" style="text-align:center; color:#94a3b8;">No hay alumnos cargados.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Año / Curso</th>
+                <th>Colegio</th>
+                <th>Docente</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in alumnos %}
+            <tr>
+                <td>{{ a.nombre }}</td>
+                <td>{{ a.telefono or "—" }}</td>
+                <td>{{ a.año_curso or "—" }}</td>
+                <td>{{ a.colegio or "—" }}</td>
+                <td>{{ a.docente or "—" }}</td>
+            </tr>
+            {% else %}
+            <tr class="empty-row">
+                <td colspan="5">No hay alumnos cargados todavía.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
